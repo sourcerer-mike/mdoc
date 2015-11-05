@@ -1,0 +1,110 @@
+body {
+  margin: 0;
+  background: white; }
+
+blockquote {
+  margin-left: 1cm;
+  width: 166mm;
+  padding-left: 1em;
+  border-left: 5px solid #ccc;
+  text-align: left; }
+
+pre {
+  margin: 0 1cm;
+  width: 156mm;
+  padding: 0.5em;
+  border: 2px solid #eee; }
+
+table {
+  padding: 0;
+  border: 0; }
+
+tfoot, tbody, thead {
+  margin: 0;
+  border: 0; }
+
+thead th {
+  border-bottom: 2px solid #000; }
+
+#content {
+  /* DIN 5008 */
+  padding-left: 24mm;
+  padding-right: 10mm;
+  padding-top: 10mm;
+  padding-bottom: 15mm; }
+  #content h1:first-of-type {
+    text-align: center; }
+  #content img {
+    display: block;
+    margin: 0 auto;
+    max-height: 20cm; }
+  #content table {
+    border-spacing: 0em;
+    margin: 0 auto;
+    max-width: 90%; }
+  #content img, #content table {
+    max-width: 162mm; }
+  #content table th,
+  #content table td {
+    padding: 0.5em; }
+  #content tbody tr:nth-child(even) {
+    background-color: #eee; }
+
+#wrapper {
+  padding: 0;
+  margin: 0;
+  width: 21cm; }
+
+@media screen {
+  body {
+    background-color: #ccc; }
+
+  #wrapper {
+    width: 21cm;
+    background-color: #fff;
+    margin: 1cm auto;
+    border: 1px solid #888;
+    padding: 0;
+    font-family: sans-serif;
+    -webkit-box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 20px 5px rgba(0, 0, 0, 0.3); }
+
+  h1 {
+    margin-top: 5cm; }
+    h1:first-of-type {
+      margin-top: 0; } }
+@media print {
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+
+  a[href^="#"]:after,
+  a[href^="javascript"]:after {
+    content: ""; }
+
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+
+  h1 {
+    page-break-before: always; }
+
+  h1:first-of-type {
+    page-break-before: avoid; }
+
+  h2, h3, h4, h5, h6 {
+    page-break-after: avoid; }
+
+  img, table {
+    page-break-before: auto;
+    page-break-after: auto;
+    page-break-inside: avoid !important; }
+
+  p {
+    orphans: 3;
+    widows: 2; }
+
+  @page {
+    size: A4;
+    margin: 0; } }
+
+/*# sourceMappingURL=style.css.map */

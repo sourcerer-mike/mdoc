@@ -10,7 +10,7 @@ define(
 
 define(
 'RMP_MDOC_BASE_URL',
-	$_SERVER['HTTP_HOST'] . str_replace( $_SERVER['DOCUMENT_ROOT'], '', getcwd() )
+	rtrim($_SERVER['HTTP_HOST'] . str_replace( $_SERVER['DOCUMENT_ROOT'], '', getcwd() ), '/')
 );
 
 define(
@@ -21,6 +21,14 @@ define(
 require_once __DIR__ . '/Rmp/Helper/Composer.php';
 
 \Rmp\Helper\Composer::load();
+
+\Rmp\Mdoc\EventManager::registerCallable(
+	'html',
+	function ( $html ) {
+		require_once __DIR__ . '/templates/md.phtml';
+	}
+)
+;
 
 $server = new \Rmp\Mdoc\Server();
 $server->serve();

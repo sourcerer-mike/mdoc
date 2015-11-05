@@ -1,0 +1,46 @@
+<!doctype html>
+<html moznomarginboxes mozdisallowselectionprint lang="de">
+<head>
+	<base href="http://<?php echo RMP_MDOC_BASE_URL; ?>/"/>
+
+	<meta charset="UTF-8">
+	<title><?php echo basename( urldecode( $_SERVER['REQUEST_URI'] ), '.md' ) ?></title>
+
+	<style type="text/css">
+		<?php echo file_get_contents(__DIR__ . '/../style.css'); ?>
+	</style>
+
+	<link href="https://raw.githubusercontent.com/necolas/normalize.css/master/normalize.css" media="all"
+	      rel="stylesheet" type="text/css"/>
+
+	<link href="branding.css" media="all" rel="stylesheet" type="text/css"/>
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+</head>
+<body>
+<table id="wrapper">
+	<thead>
+	<tr>
+		<td id="header"></td>
+	</tr>
+	</thead>
+
+	<tfoot>
+	<tr>
+		<td colspan="0" id="footer">
+			<img src="footer.jpg"/>
+		</td>
+	</tr>
+	</tfoot>
+
+	<tbody>
+	<tr>
+		<td id="content">
+			<?php echo $html; ?>
+		</td>
+	</tr>
+	</tbody>
+</table>
+</body>
+</html>

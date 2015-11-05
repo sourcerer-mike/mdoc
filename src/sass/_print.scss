@@ -1,0 +1,41 @@
+
+a[href]:after {
+  content: " (" attr(href) ")";
+}
+
+a[href^="#"]:after,
+a[href^="javascript"]:after {
+  content: "";
+}
+
+abbr[title]:after {
+  content: " (" attr(title) ")";
+}
+
+h1 {
+  page-break-before: always;
+}
+
+h1:first-of-type {
+  page-break-before: avoid;
+}
+
+h2, h3, h4, h5, h6 {
+  page-break-after: avoid;
+}
+
+img, table {
+  page-break-before: auto;
+  page-break-after: auto;
+  page-break-inside: avoid !important;
+}
+
+p {
+  orphans: 3;
+  widows: 2;
+}
+
+@page {
+  size: A4;
+  margin: 0;
+}

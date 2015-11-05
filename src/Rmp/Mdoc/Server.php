@@ -81,8 +81,6 @@ class Server {
 		$converter = new Converter();
 		$html      = $converter->toHtml( $content );
 
-		echo $html;
-
 		EventManager::dispatch( 'preHeader' );
 
 		header( 'Content-Type: text/html; charset=utf-8' );
