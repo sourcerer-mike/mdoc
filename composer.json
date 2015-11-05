@@ -1,0 +1,17 @@
+{
+    "name": "sourcerer-mike/mdoc",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Rmp\\Mdoc\\": "src/Rmp/Mdoc"
+        }
+    },
+    "require": {
+        "league/commonmark": "0.11.*",
+        "symfony/console": "2.7.5",
+        "symfony/finder": "2.7.5",
+        "webuni/commonmark-table-extension": "^0.4.1"
+    }
+}

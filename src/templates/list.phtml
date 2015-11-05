@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title><?php echo \Rmp\Mdoc\Helper::basenameToTitle( RMP_MDOC_WORKING_DIR ) ?></title>
+</head>
+<body>
+
+<a href="..">
+	&lt;&lt; Zurück
+</a>
+
+<ul>
+	<?php foreach ( $targets as $singleTarget ): ?>
+		<li>
+			<a href="<?php echo $singleTarget['url'] ?>">
+				<?php if ( $singleTarget['type'] == 'md' ): ?>
+					[]
+				<?php endif; ?>
+				<?php echo $singleTarget['title']; ?>
+			</a>
+		</li>
+	<?php endforeach; ?>
+</ul>
+
+</body>
+</html>
