@@ -3,6 +3,13 @@
 namespace Rmp\Helper;
 
 class Composer {
+	/**
+	 * @return string
+	 */
+	private static function getBasePath() {
+		return dirname( static::getConfigPath() ) . '/';
+	}
+
 	public static function getConfigPath() {
 		$dir = realpath( __DIR__ . '/../../../..' ); // skip self
 
@@ -28,6 +35,6 @@ class Composer {
 	}
 
 	public static function load() {
-		require_once static::getVendorPath() . '/autoload.php';
+		require_once self::getBasePath() . static::getVendorPath() . '/autoload.php';
 	}
 }
