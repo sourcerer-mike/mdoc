@@ -15,7 +15,7 @@ define(
 
 define(
 'RMP_MDOC_WORKING_DIR',
-	$_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI']
+	$_SERVER['DOCUMENT_ROOT'] . urldecode($_SERVER['REQUEST_URI'])
 );
 
 require_once __DIR__ . '/Rmp/Helper/Composer.php';
