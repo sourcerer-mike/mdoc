@@ -15,7 +15,7 @@ class Merge {
 	 * @return string
 	 */
 	public function mergeFiles( $fileList, $basePath ) {
-		$imagePath = str_replace( $_SERVER['DOCUMENT_ROOT'], '', $basePath );
+		$imagePath = str_replace( dirname(RMP_MDOC_BASE_DIR), '', $basePath );
 
 		$contents = '';
 		foreach ( $fileList->files() as $singleFile ) {
@@ -52,11 +52,18 @@ class Merge {
 				}
 			}
 
-			$buffer = str_replace(
-				'](./',
-				'](' . $imagePath . $singleFile->getRelativePath() . '/',
-				$buffer
+			$link = ltrim(
+				'http://' . $_SERVER['HTTP_HOST'] .
+				str_replace(
+					$_SERVER['DOCUMENT_ROOT'],
+					'',
+					$singleFile->getPath() . '/'
+				)
+				. '/',
+				'/'
 			);
+
+			$buffer = str_replace( '](./', '](' . $link, $buffer );
 
 			// in between
 			$buffer = str_replace(
