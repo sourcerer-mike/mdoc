@@ -8,6 +8,17 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class Merge {
+	protected $currentFile;
+
+	public function mergeDirectory( $basePath ) {
+		$finder = new Finder();
+		$finder->in( $basePath )
+		       ->name( '*.md' )
+		       ->sortByName();
+
+		return $this->mergeFiles( $finder, $basePath );
+	}
+
 	/**
 	 * @param SplFileInfo[] $fileList
 	 * @param string        $basePath
@@ -15,13 +26,17 @@ class Merge {
 	 * @return string
 	 */
 	public function mergeFiles( $fileList, $basePath ) {
-		$imagePath = str_replace( dirname(RMP_MDOC_BASE_DIR), '', $basePath );
+		$imagePath = str_replace( dirname( RMP_MDOC_BASE_DIR ), '', $basePath );
 
 		$contents = '';
 		foreach ( $fileList->files() as $singleFile ) {
 			if ( false == $singleFile instanceof SplFileInfo ) {
-				$singleFile = new SplFileInfo( $singleFile->getRealPath(), $basePath, $basePath );
+				$singleFile = new SplFileInfo( $singleFile->getRealPath(),
+					$basePath,
+					$basePath );
 			}
+
+			$this->setCurrentFile( $singleFile );
 
 			/** @var SplFileInfo $singleFile */
 			$buffer = $singleFile->getContents() . PHP_EOL . PHP_EOL;
@@ -79,19 +94,16 @@ class Merge {
 				$buffer
 			);
 
+			$buffer = preg_replace_callback(
+				'/\s@import "([^"]*)"\s/s',
+				[ $this, 'replaceFileImports' ],
+				$buffer
+			);
+
 			$contents .= $buffer;
 		}
 
 		return $contents;
-	}
-
-	public function mergeDirectory( $basePath ) {
-		$finder = new Finder();
-		$finder->in( $basePath )
-		       ->name( '*.md' )
-		       ->sortByName();
-
-		return $this->mergeFiles( $finder, $basePath );
 	}
 
 	/**
@@ -170,10 +182,12 @@ class Merge {
 		            . $body
 		            . PHP_EOL . PHP_EOL;
 
-		$path = $fileInfo->getPath() . '/' . $fileInfo->getBasename( '.feature' );
+		$path = $fileInfo->getPath() . '/'
+		        . $fileInfo->getBasename( '.feature' );
 
 		if ( is_dir( $path ) ) {
-			$targetFile = $path . '/' . $this->sanitizeFileName( $title ) . '.md';
+			$targetFile = $path . '/' . $this->sanitizeFileName( $title )
+			              . '.md';
 			if ( is_readable( $targetFile ) ) {
 				$feature .= file_get_contents( $targetFile )
 				            . PHP_EOL . PHP_EOL;
@@ -199,5 +213,34 @@ class Merge {
 		$sanitized = preg_replace( '/[^A-Za-z-]/', '-', $sanitized );
 
 		return $sanitized;
+	}
+
+	protected function replaceFileImports( $match ) {
+		$suffix = $match[1];
+
+		$replace = $this->getCurrentFile()->getPath()
+		           . DIRECTORY_SEPARATOR . $this->getCurrentFile()
+		                                        ->getBasename( '.md' )
+		           . $suffix;
+
+		if ( ! file_exists( $replace ) ) {
+			return PHP_EOL . $match[0] . ' (File not found)' . PHP_EOL;
+		}
+
+		return PHP_EOL . file_get_contents($replace) . PHP_EOL;
+	}
+
+	/**
+	 * @return SplFileInfo
+	 */
+	public function getCurrentFile() {
+		return $this->currentFile;
+	}
+
+	/**
+	 * @param SplFileInfo $splFileInfo
+	 */
+	protected function setCurrentFile( $splFileInfo ) {
+		$this->currentFile = $splFileInfo;
 	}
 }

@@ -42,7 +42,7 @@ thead th {
     border-spacing: 0em;
     margin: 0 auto;
     max-width: 90%; }
-  #content img, #content table {
+  #content > img, #content > table {
     max-width: 162mm; }
   #content table th,
   #content table td {
