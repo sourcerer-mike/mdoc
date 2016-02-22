@@ -227,7 +227,11 @@ class Merge {
 			return PHP_EOL . $match[0] . ' (File not found)' . PHP_EOL;
 		}
 
-		return PHP_EOL . file_get_contents($replace) . PHP_EOL;
+		$content = file_get_contents( $replace );
+
+		$content = preg_replace('@\n\s*@s', '', $content);
+
+		return PHP_EOL . $content . PHP_EOL;
 	}
 
 	/**
